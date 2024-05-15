@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Number Generator with Delay and Progress Indication</title>
+</head>
+<body>
+    <div class="number" style="height: 300px; width: 300px;border-radius: 100%;border: solid 3px green;margin-left: 35%;margin-top: 3%;margin-bottom: 5%;text-align: center;"></div>
+    <div class="timer" style="height: 200px;width: 40%;border-radius: 5px;border: solid red 3px; margin-left: 25%;color: black;font-size: 50px;"></div>
+    <script>
+        let mynumber = document.querySelector('.number');
+        let mytimer = document.querySelector('.timer');
+
+        function updateRandomNumber() {
+            let randomnumber = Math.floor(Math.random() * 100); 
+            mynumber.style.fontSize = '170px'; 
+            mynumber.textContent = randomnumber; 
+
+            
+            clearInterval(timerInterval);
+            secondsRemaining = 0;
+        }
+
+        let secondsRemaining = 0; 
+        let timerInterval; 
+
+        function updateTimerDisplay() {
+            mytimer.textContent = `Time Until Next Number: ${secondsRemaining} seconds`;
+        }
+
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(function() {
+                secondsRemaining--;
+                updateTimerDisplay();
+
+                if (secondsRemaining === 0) {
+                    clearInterval(timerInterval);
+                    updateRandomNumber();
+                    secondsRemaining = 3; 
+                    startTimer();
+                }
+            }, 1000);
+        }
+
+        
+        secondsRemaining = 3; 
+        startTimer();
+    </script>
+</body>
+</html>
+
